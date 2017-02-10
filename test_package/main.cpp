@@ -1,4 +1,4 @@
-#include <QECommon.hpp>
+#include <QEGlobal.hpp>
 
 QE_USE_NAMESPACE
 
