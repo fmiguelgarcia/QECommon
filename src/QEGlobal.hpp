@@ -26,7 +26,7 @@
 ** $QE_END_LICENSE$
 **
 ****************************************************************************/
-#pragma one
+#pragma once
 
 #if !defined(QE_NAMESPACE)
 
