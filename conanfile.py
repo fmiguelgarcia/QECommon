@@ -1,4 +1,6 @@
 from conans import ConanFile, CMake 
+from conans.tools import os_info
+import multiprocessing
 
 class QECommonConan(ConanFile):
     name = "QECommon"
@@ -16,6 +18,7 @@ class QECommonConan(ConanFile):
     def package(self):
         self.copy( pattern="*.hpp", dst="include/QECommon/", src="src")
         self.copy( pattern="LICENSE.LGPLv3", dst="share/QECommon/")
+        self.copy( pattern="libQECommon.so*", dst="lib", src="src")
         
     def package_info(self):
         self.cpp_info.libs.extend(["QECommon"])
