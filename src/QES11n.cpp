@@ -1,5 +1,7 @@
 #include "QES11n.hpp"
 
+QES11nBase::QES11nBase() = default;
+
 const QES11nBase & QES11nBase::operator <<( const QObject *const source) const
 {
 	save( source);

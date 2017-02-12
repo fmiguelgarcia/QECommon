@@ -7,6 +7,8 @@ QE_BEGIN_NAMESPACE
 class QES11nBase
 {
 	public:
+		QES11nBase();
+
 		virtual void save( const QObject* const source) const = 0;
 		virtual void load( QObject* const target) const = 0;
 		

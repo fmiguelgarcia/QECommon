@@ -2,3 +2,4 @@
 test_package/build
 build
 .*.swp
+*.kdev4
