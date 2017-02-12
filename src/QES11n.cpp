@@ -1,6 +1,8 @@
 #include "QES11n.hpp"
 
-QES11nBase::QES11nBase() = default;
+QES11nBase::QES11nBase( QObject* parent)
+  : QObject( parent)
+{}
 
 const QES11nBase & QES11nBase::operator <<( const QObject *const source) const
 {
