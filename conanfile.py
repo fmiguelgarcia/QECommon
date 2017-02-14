@@ -7,7 +7,7 @@ class QECommonConan(ConanFile):
     version = "0.1.0"
     settings = "os", "compiler", "build_type", "arch"
     license = "https://www.gnu.org/licenses/lgpl-3.0-standalone.html"
-    exports = "*"
+    exports = ["src/*", "CMakeLists.txt"]
 
     def build(self):
         cmake = CMake( self.settings)
