@@ -15,7 +15,7 @@ class QECommonConan(ConanFile):
     def build(self):
         cmake = CMake( self.settings)
         self.run( "cmake %s/QECommon %s" % (self.conanfile_directory, cmake.command_line))
-        self.run( "cmake --build . %s %s" % cmake.build_config)
+        self.run( "cmake --build . %s" % cmake.build_config)
 
     def package(self):
         self.copy( pattern="*.hpp", dst="include/QECommon/", src="QECommon/src")
