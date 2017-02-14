@@ -18,7 +18,7 @@ class QECommonConan(ConanFile):
         cmake = CMake( self.settings)
         self.run( "cmake %s/QECommon %s" % (self.conanfile_directory, cmake.command_line))
         self.run( "cmake --build . %s %s" % (cmake.build_config, 
-            ("-- -j %d " % multiprocessing.cpu_count()) if os_info.is_linux else ""))
+            ("-- -j %d " % multiprocessing.cpu_count()) if self.settings.os == "Linux" else ""))
 
     def package(self):
         self.copy( pattern="*.hpp", dst="include/QECommon/", src="QECommon/src")
