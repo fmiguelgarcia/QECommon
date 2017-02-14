@@ -7,16 +7,21 @@ class QECommonConan(ConanFile):
     version = "0.1.0"
     settings = "os", "compiler", "build_type", "arch"
     license = "https://www.gnu.org/licenses/lgpl-3.0-standalone.html"
-    exports = ["src/*", "CMakeLists.txt"]
+    url = "ssh://miguel@migroslinx.no-ip.org/home/miguel/git/QE/QECommon.git"
+    # exports = ["src/*", "CMakeLists.txt"]
+    description = """Common header files and abstract classes for Qt Enterprise"""
+
+    def source(self):
+        self.run( "git clone %s" % self.url)
 
     def build(self):
         cmake = CMake( self.settings)
-        self.run( "cmake %s %s" % (self.conanfile_directory, cmake.command_line))
+        self.run( "cmake %s/QECommon %s" % (self.conanfile_directory, cmake.command_line))
         self.run( "cmake --build . %s %s" % (cmake.build_config, 
             ("-- -j %d " % multiprocessing.cpu_count()) if os_info.is_linux else ""))
 
     def package(self):
-        self.copy( pattern="*.hpp", dst="include/QECommon/", src="src")
+        self.copy( pattern="*.hpp", dst="include/QECommon/", src="QECommon/src")
         self.copy( pattern="LICENSE.LGPLv3", dst="share/QECommon/")
         self.copy( pattern="libQECommon.so*", dst="lib", src="src")
         
