@@ -1,6 +1,4 @@
 from conans import ConanFile, CMake 
-from conans.tools import os_info
-import multiprocessing
 
 class QECommonConan(ConanFile):
     name = "QECommon"
@@ -17,8 +15,7 @@ class QECommonConan(ConanFile):
     def build(self):
         cmake = CMake( self.settings)
         self.run( "cmake %s/QECommon %s" % (self.conanfile_directory, cmake.command_line))
-        self.run( "cmake --build . %s %s" % (cmake.build_config, 
-            ("-- -j %d " % multiprocessing.cpu_count()) if self.settings.os == "Linux" else ""))
+        self.run( "cmake --build . %s %s" % cmake.build_config)
 
     def package(self):
         self.copy( pattern="*.hpp", dst="include/QECommon/", src="QECommon/src")
