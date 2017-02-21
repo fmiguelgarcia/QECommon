@@ -11,7 +11,8 @@ set( QECommon_MINOR_VERSION 1)
 set( QECommon_BUILD_VERSION 0)
 
 set( QECommon_SRCS
-	QES11n.cpp)
+	QEGadget.cpp
+	QES11n.cpp) 
 
 # Link
 add_library( QECommon SHARED ${QECommon_SRCS})
