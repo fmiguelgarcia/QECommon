@@ -44,5 +44,5 @@
 #endif
 
 template <typename std::unique_ptr<T> >
-static inline T* qGetPtrHelper( const std::unique_ptr<T>& p)
+static inline typename std::unique_ptr<T>::pointer qGetPtrHelper( const std::unique_ptr<T>& p)
 { return p.get(); }
