@@ -27,6 +27,7 @@
 **
 ****************************************************************************/
 #pragma once
+#include <memory>
 
 #if !defined(QE_NAMESPACE)
 
@@ -43,5 +44,5 @@
 #endif
 
 template <typename std::unique_ptr<T> >
-static inline typename T* qGetPtrHelper( const std::unique_ptr<T>& p)
+static inline T* qGetPtrHelper( const std::unique_ptr<T>& p)
 { return p.get(); }
