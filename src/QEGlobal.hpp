@@ -41,3 +41,7 @@
 # define QE_END_NAMESPACE }
 
 #endif
+
+template <typename std::unique_ptr<T> >
+static inline typename T* qGetPtrHelper( const std::unique_ptr<T>& p)
+{ return p.get(); }
