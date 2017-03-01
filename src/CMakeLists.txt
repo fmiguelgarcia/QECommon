@@ -1,6 +1,4 @@
 # Requirements 
-#include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-#conan_basic_setup()
 find_package( Qt5Core REQUIRED)
 set( CMAKE_AUTOMOC ON)
 set( CMAKE_INCLUDE_CURRENT_DIR ON)

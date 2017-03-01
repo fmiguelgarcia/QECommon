@@ -6,7 +6,6 @@ class QECommonConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     license = "https://www.gnu.org/licenses/lgpl-3.0-standalone.html"
     url = "ssh://miguel@migroslinx.no-ip.org/home/miguel/git/QE/QECommon.git"
-    # exports = ["src/*", "CMakeLists.txt"]
     description = """Common header files and abstract classes for Qt Enterprise"""
 
     def source(self):
