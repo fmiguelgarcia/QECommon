@@ -23,4 +23,4 @@ class QECommonConan(ConanFile):
         
     def package_info(self):
         self.cpp_info.libs.extend(["QECommon"])
-        self.cpp_info.includedirs.extend(["include/QECommon"])
+        self.cpp_info.includedirs.extend(["include/QECommon", "include"])
