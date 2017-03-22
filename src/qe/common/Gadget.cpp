@@ -24,33 +24,7 @@
  *
  * $QE_END_LICENSE$
  */
-#pragma once
-#include <QEGlobal.hpp>
-#include <QObject>
+#include "Gadget.hpp"
+using namespace qe::common;
 
-QE_BEGIN_NAMESPACE
-
-/// @brief Base class for serialisation.
-class QES11nBase : public QObject
-{
-	public:
-		/// @brief Default constructor.
-		QES11nBase( QObject* parent = nullptr);
-
-		/// @brief Save @p source.
-		/// @param source Source object.
-		virtual void save( const QObject* const source) const = 0;
-
-		/// @brief Load into @p target. 
-		virtual void load( QObject* const target) const = 0;
-
-		/// @brief It returns the MIME type.
-		virtual QString mimeType() const = 0;
-		
-		const QES11nBase & operator<<( const QObject *const source) const;
-		const QES11nBase & operator>>( QObject *const source) const;
-	private:
-		Q_DISABLE_COPY( QES11nBase)
-};
-
-QE_END_NAMESPACE
+QEGadget::QEGadget() = default;

@@ -26,17 +26,9 @@
  */
 
 #pragma once
-#include <QEGlobal.hpp>
-#include <QObject>
+#include <memory>
 
-QE_BEGIN_NAMESPACE
-
-/// @brief 
-class QEGadget
-{
-	Q_GADGET
-	public:
-		QEGadget();
-};
-
-QE_END_NAMESPACE
+/// @brief Helper for d_pointer
+template <typename T >
+static inline typename std::unique_ptr<T>::pointer qGetPtrHelper( const std::unique_ptr<T>& p)
+{ return p.get(); }

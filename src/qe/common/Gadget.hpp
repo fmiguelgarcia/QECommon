@@ -26,46 +26,15 @@
  */
 
 #pragma once
-#include <QEGlobal.hpp>
-#include <QVariant>
+#include <QObject>
 
-QE_BEGIN_NAMESPACE
-
-/// @brief This wrapper help you to expose relation properties using
-/// QVariantList instead of a native container.
-template< class C>
-class QEContainerWrapper
+namespace qe { namespace common 
 {
-	private:
-		C& m_container;
-		using CValueType = typename C::value_type;
-		
-	public: 
-		QEContainerWrapper(C& container) : m_container( container)
-		{}
+	class QEGadget
+	{
+		Q_GADGET
+		public:
+			QEGadget();
+	};
+}}
 
-		/// @brief This read function loads all elements of the native container
-		/// as a QVariantList.
-		QVariantList operator()() const
-		{
-			QVariantList list;
-			for( CValueType& item : m_container)
-				list << QVariant::fromValue( std::addressof(item));
-			return list;
-		}
-
-		/// @brief This write function stores all elements from QVariantList to
-		/// the native container. 
-		void operator()( const QVariantList& list)
-		{
-			using CItem = typename C::value_type;
-			m_container.clear();
-			for( const QVariant &item : list)
-			{
-				CItem * nativeItem = item.value<CItem*>();
-				m_container.push_back( *nativeItem);
-			}
-		}
-};
-
-QE_END_NAMESPACE

@@ -24,6 +24,37 @@
  *
  * $QE_END_LICENSE$
  */
-#include "QEGadget.hpp"
+#include <Exception.hpp>
 
-QEGadget::QEGadget() = default;
+using namespace qe::common;
+			
+Exception::Exception( const QString& message) 
+	: m_message( message.toLocal8Bit())
+{}
+
+Exception::Exception( const QByteArray& message) noexcept
+	: m_message( message)
+{}
+
+Exception::Exception( Exception&& other) noexcept
+	: m_message( std::move( other.m_message))
+{}
+
+Exception::Exception( const Exception& other) noexcept
+	: m_message( other.m_message)
+{}
+
+Exception& Exception::operator=( const Exception& other) noexcept
+{
+	m_message = other.m_message;
+	return *this;
+}
+
+Exception* Exception::clone() const
+{ return new Exception( *this); }
+
+void Exception::raise() const
+{ throw *this; }
+
+const char* Exception::what() const noexcept
+{ return m_message.constData(); }
