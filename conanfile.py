@@ -14,9 +14,10 @@ class QECommonConan(ConanFile):
 
     def build(self):
         cmake = CMake( self.settings)
+        parallel_build = ("-- -j %d " % multiprocessing.cpu_count()) if os_info.is_linux else ""
         self.run( "cmake %s %s" % (self.conanfile_directory, cmake.command_line))
-        self.run( "cmake --build . %s" % (cmake.build_config,
-            ("-- -j %d " % multiprocessing.cpu_count()) if os_info.is_linux else ""))
+        self.run( "cmake --build . %s %s" % (cmake.build_config,
+            parallel_build))
 
     def package(self):
         self.copy( pattern="*.hpp", dst="include/qe/common/", src="src/qe/common")

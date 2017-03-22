@@ -1,8 +1,19 @@
-#include <QEGlobal.hpp>
+#include <qe/common/Common.hpp>
+#include <qe/common/Exception.hpp>
 
-QE_USE_NAMESPACE
+using namespace qe::common;
 
 int main(int argc, char** argv)
 {
-	return 0;
+	int status = 0;
+	const QString message = QStringLiteral( "Throwing an exception");
+
+	try {
+		Exception::makeAndThrow( message);
+	}catch( Exception & e){
+		if( message != e.what())
+			status = 1;	
+	}
+
+	return status;
 }
