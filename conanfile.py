@@ -24,6 +24,8 @@ class QECommonConan(ConanFile):
         self.copy( pattern="LICENSE.LGPLv3", dst="share/qe/common/")
         self.copy( pattern="libQECommon.so*", dst="lib", src="src/qe/common",
                 links=True)
+        self.copy( pattern="libQECommon.dll", dst="lib", src="src/qe/common/bin")
+        self.copy( pattern="libQECommon.dll.a", dst="lib", src="src/qe/common/lib")
         
     def package_info(self):
         self.cpp_info.libs.extend(["QECommon"])
