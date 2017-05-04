@@ -26,7 +26,14 @@
  */
 
 #pragma once
+#include <QtGlobal>
 #include <memory>
+
+#if defined(QECOMMON_LIBRARY)
+#  define QECOMMON_EXPORT Q_DECL_EXPORT
+#else
+#  define QECOMMON_EXPORT Q_DECL_IMPORT
+#endif
 
 /// @brief Helper for d_pointer
 template <typename T >

@@ -1,6 +1,4 @@
 from conans import ConanFile, CMake 
-from conans.tools import os_info
-import multiprocessing
 
 class QECommonConan(ConanFile):
     name = "QECommon"
@@ -13,19 +11,22 @@ class QECommonConan(ConanFile):
     exports_sources = ["src/*", "test/*", "tools/*", "CMakeLists.txt"]
 
     def build(self):
-        cmake = CMake( self.settings)
-        parallel_build = ("-- -j %d " % multiprocessing.cpu_count()) if os_info.is_linux else ""
-        self.run( "cmake %s %s" % (self.conanfile_directory, cmake.command_line))
-        self.run( "cmake --build . %s %s" % (cmake.build_config,
-            parallel_build))
+        cmake = CMake( self)
+        cmake.configure()
+        cmake.build()
 
     def package(self):
         self.copy( pattern="*.hpp", dst="include/qe/common/", src="src/qe/common")
         self.copy( pattern="LICENSE.LGPLv3", dst="share/qe/common/")
         self.copy( pattern="libQECommon.so*", dst="lib", src="src/qe/common",
                 links=True)
-        self.copy( pattern="libQECommon.dll", dst="lib", src="src/qe/common/bin")
-        self.copy( pattern="libQECommon.dll.a", dst="lib", src="src/qe/common/lib")
+        if self.settings.os == "Windows":
+            libNames = ["QECommon", "libQECommon"]
+            libExts = [".dll", ".lib", ".dll.a", ".pdb"]
+            for libName in libNames:
+                for libExt in libExts:
+                    filePattern = "**/" + libName + libExt
+                    self.copy( pattern=filePattern, dst="lib", src="src/qe/common", keep_path=False)
         
     def package_info(self):
         self.cpp_info.libs.extend(["QECommon"])

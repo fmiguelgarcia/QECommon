@@ -26,11 +26,12 @@
  */
 
 #pragma once
+#include <qe/common/Common.hpp>
 #include <QObject>
 
 namespace qe { namespace common 
 {
-	class QEGadget
+    class QECOMMON_EXPORT QEGadget
 	{
 		Q_GADGET
 		public:
