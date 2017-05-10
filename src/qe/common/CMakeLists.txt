@@ -6,7 +6,9 @@ set( QECommon_MINOR_VERSION 1)
 set( QECommon_BUILD_VERSION 0)
 
 # Source
-set( QECommon_SRCS Exception.cpp Gadget.cpp)
+set( QECommon_SRCS Exception.cpp Gadget.cpp
+	Future.cpp FutureBase.cpp )
+add_definitions( -DBUILD_QECOMMON_LIB)
 
 # Link
 add_library( QECommon SHARED ${QECommon_SRCS})

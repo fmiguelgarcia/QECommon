@@ -25,6 +25,7 @@
  * $QE_END_LICENSE$
  */
 #pragma once
+#include <qe/common/Global.hpp>
 #include <QException>
 #include <QString>
 #include <QByteArray>
@@ -32,7 +33,7 @@
 namespace qe { namespace common 
 {
 	/// @brief QE exception base class that supports transfer across threads.
-	class Exception : public QException 
+	class QECOMMON_EXPORT Exception : public QException
 	{
 		public:
 			/// @brief Constructor.
