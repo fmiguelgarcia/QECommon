@@ -27,6 +27,7 @@
 
 #pragma once
 #include <qe/common/Global.hpp>
+#include <qe/common/Common.hpp>
 #include <QObject>
 
 namespace qe { namespace common 

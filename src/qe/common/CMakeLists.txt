@@ -6,11 +6,14 @@ set( QECommon_MINOR_VERSION 1)
 set( QECommon_BUILD_VERSION 0)
 
 # Source
-set( QECommon_SRCS Exception.cpp Gadget.cpp
+set( QECommon_SRCS 
+	Common.hpp
+	Exception.cpp Gadget.cpp
 	Future.cpp FutureBase.cpp )
 add_definitions( -DBUILD_QECOMMON_LIB)
 
 # Link
+add_definitions( -DQECOMMON_LIBRARY)
 add_library( QECommon SHARED ${QECommon_SRCS})
 target_link_libraries( QECommon Qt5::Core ${CONAN_LIBS}) 
 set_target_properties( QECommon PROPERTIES 
