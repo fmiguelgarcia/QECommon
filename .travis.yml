@@ -1,12 +1,15 @@
 language: cpp
 dist: trusty
 compiler:
-- gcc
-install:
+   - gcc
+
+before_install:
    - sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1397BC53640DB551
    - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
    - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
    - sudo apt-get update -qq 
+
+install:
    - sudo apt-get install -qq gcc-6 qt58-meta
    - pip install --user conan
 
@@ -15,5 +18,5 @@ before_script:
    - source $QT_ENV_SCRIPT
 
 script:
-# Download dependencies, build, test and create package
-- conan test_package
+   # Download dependencies, build, test and create package
+   - conan test_package
