@@ -76,7 +76,6 @@ namespace qe { namespace common
 			}	
 
       protected:
-         friend class ExceptionPrivate;
          ExceptionPrivate* d_ptr;
 
 		private:
