@@ -2,10 +2,12 @@
 
 It is the common library for **QE Framework**.
 
-1. [Installation](#Installation)
-1. [Versioning](#Versioning)
+1. [Installation](#installation)
+1. [Versioning](#versioning)
 1. [Content](#content)
-1. [License](#License)
+    1. [Class qe::common::Future](#class-qecommonfuture)
+    1. [Class qe::common::Exception](#class-qecommonexception)
+1. [License](#license)
 
 ## Installation
 
@@ -34,7 +36,7 @@ It is the base class for QE Framework exception. It is able to clone and raise i
 
 ## License 
 
-This license follows the dual-license pattern that Qt is currently using. A [LGPL 3.0 license](https://www.gnu.org/licenses/lgpl-3.0-standalone.html) for projects that do not need commercial support, and another one, **Commercial license** in other case.
+This license follows the dual-license pattern that Qt is currently using. A [LGPL 3.0 license](https://www.gnu.org/licenses/lgpl-3.0-standalone.html) for projects that do not need commercial support, and another one, **Commercial license** for rest of cases. 
 
 You can find a brief comparison between both licenses in the below table:
 
