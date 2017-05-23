@@ -12,7 +12,7 @@ It is the common library for **QE Framework**.
 ## Installation
 
 The easiest way to use this library in your code is by [Conan Package Manager](https://www.conan.io).
-Please use the project setup that you can find in [QECommon/1.0.0 Conan](https://www.conan.io/source/QECommon/0.1.0/fmiguelgarcia/stable).
+Please use the project setup that you can find in [QECommon/1.0.0 Conan](https://www.conan.io/source/QECommon/1.0.0/fmiguelgarcia/stable).
 
 ## Versioning
 
