@@ -7,7 +7,7 @@ username = os.getenv("CONAN_USERNAME", "demo")
 
 class PackageTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "QECommon/0.1.0@%s/%s" % (username, channel)
+    requires = "QECommon/1.0.0@%s/%s" % (username, channel)
     generators = "cmake"
 
     def build(self):
