@@ -24,36 +24,24 @@
  *
  * $QE_END_LICENSE$
  */
-#include "Future.hpp"
+#include "FutureData.hpp"
 using namespace qe::common;
 using namespace std;
 
-Future<void>::Future()
-	: m_d( make_shared<SharedData>())
+FutureData<void>::FutureData( QObject* parent)
+	: FutureBase( parent)
 {}
 
-Future<void>::Future( const Future<void>& other)
-	: m_d( other.m_d)
-{}
+void FutureData<void>::setValue()
+{
+	promise.set_value();
+	emit finished();
+}
 
-Future<void>::Future( Future<void>&& other)
-	: m_d( std::move( other.m_d))
-{}
+void FutureData<void>::setException( std::exception_ptr p)
+{
+	promise.set_exception( p);
+	emit finished();
+}
 
-bool Future<void>::isValid() const noexcept
-{ return m_d->future.valid();}
 
-void Future<void>::wait() const
-{ return m_d->future.wait();}
-
-void Future<void>::value() const
-{ m_d->future.get();}
-
-void Future<void>::setValue()
-{ m_d->setValue();}
-
-void Future<void>::setException( std::exception_ptr p)
-{ m_d->setException(p);}
-
-QObject* Future<void>::sharedQObject() const noexcept
-{ return m_d.get();}

@@ -27,4 +27,8 @@
 #include "Gadget.hpp"
 using namespace qe::common;
 
-QEGadget::QEGadget() = default;
+QEGadget::QEGadget()
+{}
+         
+QEGadget::~QEGadget()
+{}

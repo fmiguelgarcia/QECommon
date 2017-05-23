@@ -32,6 +32,7 @@
 
 namespace qe { namespace common 
 {
+   class ExceptionPrivate;
 	/// @brief QE exception base class that supports transfer across threads.
 	class QECOMMON_EXPORT Exception : public QException
 	{
@@ -74,9 +75,14 @@ namespace qe { namespace common
 			  	exc.raise();
 			}	
 
+      protected:
+         friend class ExceptionPrivate;
+         ExceptionPrivate* d_ptr;
+
 		private:
 			/// stored Message. It uses the local 8-bit representation. 
 			QByteArray m_message;
+         Q_DECLARE_PRIVATE(Exception);
 	};
 }}
 	

@@ -28,15 +28,24 @@
 #pragma once
 #include <qe/common/Global.hpp>
 #include <qe/common/Common.hpp>
+#include <QtGlobal>
 #include <QObject>
 
 namespace qe { namespace common 
 {
+   class QEGadgetPrivate;
 	class QECOMMON_EXPORT QEGadget
 	{
 		Q_GADGET
 		public:
 			QEGadget();
+         virtual ~QEGadget();
+   
+      protected:
+         QEGadgetPrivate *d_ptr;
+
+      private:
+         Q_DECLARE_PRIVATE( QEGadget);
 	};
 }}
 

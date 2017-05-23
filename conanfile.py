@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 
 class QECommonConan(ConanFile):
     name = "QECommon"
-    version = "0.1.0"
+    version = "1.0.0"
     settings = "os", "compiler", "build_type", "arch"
     license = "https://www.gnu.org/licenses/lgpl-3.0-standalone.html"
     url = "https://github.com/fmiguelgarcia/QECommon.git"
@@ -16,17 +16,24 @@ class QECommonConan(ConanFile):
         cmake.build()
 
     def package(self):
-        self.copy( pattern="*.hpp", dst="include/qe/common/", src="src/qe/common")
+        # Headers and 
+        self.copy( pattern="*.hpp", dst="include", src="src")
         self.copy( pattern="LICENSE.LGPLv3", dst="share/qe/common/")
-        self.copy( pattern="libQECommon.so*", dst="lib", src="src/qe/common",
-                links=True)
-        if self.settings.os == "Windows":
+
+        if self.settings.compiler == "Visual Studio":
             libNames = ["QECommon", "libQECommon"]
-            libExts = [".dll", ".lib", ".dll.a", ".pdb"]
+            for libName in libNames:
+                filePattern = "**/" + libName + ".lib"
+                self.copy( filePattern, dst="lib", src="src/qe/common", keep_path=False)
+
+            libExts = [".dll", ".pdb"]
             for libName in libNames:
                 for libExt in libExts:
                     filePattern = "**/" + libName + libExt
-                    self.copy( pattern=filePattern, dst="lib", src="src/qe/common", keep_path=False)
+                    self.copy( pattern=filePattern, dst="bin", src="src/qe/common", keep_path=False)
+
+        else:
+            self.copy( "libQECommon.so*", dst="lib", src="src/qe/common", links=True, keep_path=False)
         
     def package_info(self):
         self.cpp_info.libs.extend(["QECommon"])
