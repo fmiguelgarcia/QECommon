@@ -1,8 +1,8 @@
 # Requirements 
 include( ${CMAKE_SOURCE_DIR}/tools/cmake/common.cmake)
 
-set( QECommon_MAYOR_VERSION 0)
-set( QECommon_MINOR_VERSION 1)
+set( QECommon_MAYOR_VERSION 1)
+set( QECommon_MINOR_VERSION 0)
 set( QECommon_BUILD_VERSION 0)
 
 # Source
