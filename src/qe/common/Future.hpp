@@ -66,6 +66,9 @@ namespace qe { namespace common {
 			inline QObject* sharedQObject() const noexcept
 			{ return m_d.get(); }
 
+			inline FutureBase* base() const noexcept
+			{ return m_d.get(); }	
+
 		private:
 			SharedDataPtr m_d;
 	};
@@ -88,6 +91,7 @@ namespace qe { namespace common {
 			void setValue();
 			void setException( std::exception_ptr p);
 			QObject* sharedQObject() const noexcept;
+			FutureBase* base() const noexcept;
 
 		private:
 			SharedDataPtr m_d;

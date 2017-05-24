@@ -57,3 +57,6 @@ void Future<void>::setException( std::exception_ptr p)
 
 QObject* Future<void>::sharedQObject() const noexcept
 { return m_d.get();}
+
+FutureBase* Future<void>::base() const noexcept
+{ return m_d.get();}
