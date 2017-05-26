@@ -7,11 +7,11 @@ set( QECommon_BUILD_VERSION 0)
 
 # Source
 set( QECommon_SRCS 
-	Common.hpp
+	Common.cpp
 	Exception.cpp 
-   Gadget.cpp
-   FutureBase.cpp
-   FutureData.cpp
+	Gadget.cpp
+	FutureBase.cpp
+	FutureData.cpp
 	Future.cpp)
 add_definitions( -DBUILD_QECOMMON_LIB)
 

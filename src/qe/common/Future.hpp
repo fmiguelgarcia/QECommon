@@ -25,6 +25,7 @@
  * $QE_END_LICENSE$
  */
 #pragma once
+#include <qe/common/Common.hpp>
 #include <qe/common/FutureData.hpp>
 
 namespace qe { namespace common {
@@ -36,7 +37,9 @@ namespace qe { namespace common {
 			using SharedData = FutureData<T>;
 			using SharedDataPtr = std::shared_ptr<SharedData>;
 
-			Future() :m_d( std::make_shared<SharedData>())
+			Future() :m_d(
+				new SharedData,
+				SharedPtrQObjectDeleter())
 			{}
 
 			Future( const Future& other) noexcept
