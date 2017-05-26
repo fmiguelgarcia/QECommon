@@ -29,7 +29,7 @@ using namespace qe::common;
 using namespace std;
 
 Future<void>::Future()
-	: m_d( make_shared<SharedData>())
+	: m_d(  new SharedData, SharedPtrQObjectDeleter())
 {}
 
 Future<void>::Future( const Future<void>& other) noexcept
@@ -39,6 +39,9 @@ Future<void>::Future( const Future<void>& other) noexcept
 Future<void>::Future( Future<void>&& other) noexcept
 	: m_d( std::move( other.m_d))
 {}
+
+void Future<void>::detach()
+{ m_d.reset( new SharedData(), SharedPtrQObjectDeleter()); }
 
 bool Future<void>::isValid() const noexcept
 { return m_d->future.valid();}

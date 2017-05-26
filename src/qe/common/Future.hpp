@@ -50,6 +50,10 @@ namespace qe { namespace common {
 				: m_d( std::forward<SharedDataPtr>( other.m_d))
 			{}
 
+			/// @brief It force to detach the shared data.
+			inline void detach()
+			{ m_d.reset( new SharedData, SharedPtrQObjectDeleter()); }
+
 			inline bool isValid() const noexcept
 			{ return m_d->future.valid();}
 
@@ -89,6 +93,7 @@ namespace qe { namespace common {
 			Future();
 			Future( const Future& other) noexcept;
 			Future( Future&& other) noexcept;
+			void detach();
 
 			bool isValid() const noexcept;
 			void wait() const;
