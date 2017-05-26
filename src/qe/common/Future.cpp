@@ -32,11 +32,11 @@ Future<void>::Future()
 	: m_d( make_shared<SharedData>())
 {}
 
-Future<void>::Future( const Future<void>& other)
+Future<void>::Future( const Future<void>& other) noexcept
 	: m_d( other.m_d)
 {}
 
-Future<void>::Future( Future<void>&& other)
+Future<void>::Future( Future<void>&& other) noexcept
 	: m_d( std::move( other.m_d))
 {}
 

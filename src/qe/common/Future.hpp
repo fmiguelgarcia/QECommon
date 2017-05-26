@@ -39,10 +39,12 @@ namespace qe { namespace common {
 			Future() :m_d( std::make_shared<SharedData>())
 			{}
 
-			Future( const Future& other) : m_d( other.m_d)
+			Future( const Future& other) noexcept
+				: m_d( other.m_d)
 			{}
 
-			Future( Future&& other) : m_d( std::forward<SharedDataPtr>( other.m_d))
+			Future( Future&& other) noexcept
+				: m_d( std::forward<SharedDataPtr>( other.m_d))
 			{}
 
 			inline bool isValid() const noexcept
@@ -82,8 +84,8 @@ namespace qe { namespace common {
 			using SharedDataPtr = std::shared_ptr<SharedData>;
 
 			Future();
-			Future( const Future& other);
-			Future( Future&& other);
+			Future( const Future& other) noexcept;
+			Future( Future&& other) noexcept;
 
 			bool isValid() const noexcept;
 			void wait() const;
