@@ -40,7 +40,7 @@ Future<void>::Future( Future<void>&& other) noexcept
 	: m_d( std::move( other.m_d))
 {}
 
-void Future<void>::detach()
+void Future<void>::detach() const
 { m_d.reset( new SharedData(), SharedPtrQObjectDeleter()); }
 
 bool Future<void>::isValid() const noexcept

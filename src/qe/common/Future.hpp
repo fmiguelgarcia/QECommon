@@ -51,7 +51,7 @@ namespace qe { namespace common {
 			{}
 
 			/// @brief It force to detach the shared data.
-			inline void detach()
+			inline void detach() const
 			{ m_d.reset( new SharedData, SharedPtrQObjectDeleter()); }
 
 			inline bool isValid() const noexcept
@@ -79,7 +79,7 @@ namespace qe { namespace common {
 			{ return m_d.get(); }	
 
 		private:
-			SharedDataPtr m_d;
+			mutable SharedDataPtr m_d;
 	};
 
 	/// @brief Void template specialization.
@@ -93,7 +93,7 @@ namespace qe { namespace common {
 			Future();
 			Future( const Future& other) noexcept;
 			Future( Future&& other) noexcept;
-			void detach();
+			void detach() const;
 
 			bool isValid() const noexcept;
 			void wait() const;
@@ -104,7 +104,7 @@ namespace qe { namespace common {
 			FutureBase* base() const noexcept;
 
 		private:
-			SharedDataPtr m_d;
+			mutable SharedDataPtr m_d;
 	};
 
 }}
