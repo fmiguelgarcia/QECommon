@@ -1,4 +1,5 @@
 from conans import ConanFile, CMake 
+import os 
 
 class QECommonConan(ConanFile):
     name = "QECommon"
@@ -9,6 +10,11 @@ class QECommonConan(ConanFile):
     generators = "cmake"
     description = "Common header files and abstract classes for QE"
     exports_sources = ["src/*", "test/*", "tools/*", "CMakeLists.txt"]
+    options = { "qt_version": "ANY"}
+
+    def configure(self):
+        self.options.qt_version = os.popen("qmake -query QT_VERSION").read().strip()
+        self.output.info("Configure Qt Version: %s" % self.options.qt_version)
 
     def build(self):
         cmake = CMake( self)
