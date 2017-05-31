@@ -62,6 +62,9 @@ namespace qe { namespace common {
 
 			std::promise<T> promise;
 			std::future<T> future;
+
+		private:
+			FutureData( const FutureData& ) = delete;
 	};
 
 	/// @brief Void template specialization.
@@ -77,5 +80,8 @@ namespace qe { namespace common {
 
 			std::promise<void> promise;
 			std::future<void> future;
+
+		private:
+			FutureData<void>( const FutureData<void>& ) = delete;
 	};
 }}

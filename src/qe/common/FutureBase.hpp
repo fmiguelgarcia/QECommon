@@ -37,7 +37,7 @@ namespace qe { namespace common {
 		Q_OBJECT
 		public:
 			explicit FutureBase( QObject* parent = nullptr);
-         virtual ~FutureBase();
+			virtual ~FutureBase();
 
 		signals:
 			void finished();

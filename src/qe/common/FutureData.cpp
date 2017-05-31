@@ -30,7 +30,9 @@ using namespace std;
 
 FutureData<void>::FutureData( QObject* parent)
 	: FutureBase( parent)
-{}
+{
+	future = promise.get_future();
+}
 
 void FutureData<void>::setValue()
 {
