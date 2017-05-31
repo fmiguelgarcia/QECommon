@@ -25,6 +25,7 @@
  */
 #pragma once
 #include <qe/common/Common.hpp>
+#include <QSqlDatabase>
 #include <QString>
 #include <memory>
 
@@ -38,6 +39,7 @@ namespace qe { namespace common {
 			~DBConnectionLockGuard();
 
 			QString connection() const noexcept;
+			QSqlDatabase database() const;
 
 		protected:
 			DBConnectionLockGuard( const QString& baseConnection, const QString& lockedConnection );

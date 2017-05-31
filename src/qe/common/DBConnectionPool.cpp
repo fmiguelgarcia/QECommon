@@ -17,9 +17,10 @@
 
 #include "DBConnectionPool.hpp"
 #include "DBConnectionLockGuard.hpp"
-#include <QSqlDatabase>
-#include <QThread>
 #include <QStringBuilder>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QThread>
 
 using namespace qe::common;
 using namespace std;
@@ -122,7 +123,6 @@ void DBConnectionPool::release(
 	lock_guard<mutex> _(m_freeConnsMtx);
 	m_freeConns[ baseConn].push_back( lockedConn);
 
-	QSqlDatabase::removeDatabase( lockedConn);
 	qCDebug( lcDBConnectionPool,
 		"Connection '%s' is released",
 		qUtf8Printable( lockedConn));
@@ -136,9 +136,18 @@ QString DBConnectionPool::createLockedConnName( const QString& conn) const
 		% "_"
 		% QString::number( ++sequencer);
 
-	QSqlDatabase::cloneDatabase(
+	QSqlDatabase clonedDb = QSqlDatabase::cloneDatabase(
 		QSqlDatabase::database( conn),
 		lockedConnName);
+	if( !clonedDb.open())
+	{
+		const QSqlError dbError = clonedDb.lastError();
+		qCCritical( lcDBConnectionPool,
+			"Connection pool can NOT open the new cloned connection '%s' from '%s': %s",
+			qUtf8Printable( lockedConnName),
+			qUtf8Printable( conn),
+			qUtf8Printable( dbError.text()));
+	}
 
 	qCDebug( lcDBConnectionPool,
 		"New connection '%s' has been cloned from '%s'",

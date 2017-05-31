@@ -60,3 +60,8 @@ DBConnectionLockGuard::~DBConnectionLockGuard()
 /// queries in a safe way.
 QString DBConnectionLockGuard::connection() const noexcept
 { return m_lockedConn;}
+
+QSqlDatabase DBConnectionLockGuard::database() const
+{
+	return QSqlDatabase::database( m_lockedConn);
+}
