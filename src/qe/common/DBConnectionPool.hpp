@@ -26,6 +26,7 @@
  */
 #pragma once
 #include <qe/common/Common.hpp>
+#include <qe/common/DBConnectionLockGuard.hpp>
 #include <QLoggingCategory>
 #include <QString>
 #include <deque>
@@ -36,7 +37,6 @@ namespace qe { namespace common {
 	Q_DECLARE_LOGGING_CATEGORY( lcDBConnectionPool);
 
 	class DBConnectionPoolPrivate;
-	class DBConnectionLockGuard;
 	class QECOMMON_EXPORT DBConnectionPool
 	{
 		friend class DBConnectionLockGuard;
