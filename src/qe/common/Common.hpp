@@ -43,3 +43,17 @@ namespace qe { namespace common {
 		void operator()( QObject* o) const;
 	};
 }}
+
+#ifdef QE_USE_STD_OPTIONAL
+# include <optional>
+namespace qe { namespace common {
+	template< class T>
+	using optional = std::optional<T>;
+}}
+#else
+#include <boost/optional.hpp>
+namespace qe { namespace common {
+	template< class T>
+	using optional = boost::optional<T>;
+}}
+#endif

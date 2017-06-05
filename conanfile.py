@@ -10,7 +10,8 @@ class QECommonConan(ConanFile):
     generators = "cmake"
     description = "Common header files and abstract classes for QE"
     exports_sources = ["src/*", "test/*", "tools/*", "CMakeLists.txt"]
-    options = { "qt_version": "ANY"}
+    options = { "qt_version": "ANY", "use_std_optional": [True ,False]}
+    default_options = "use_std_optional=False"
 
     def configure(self):
         self.options.qt_version = os.popen("qmake -query QT_VERSION").read().strip()
@@ -18,6 +19,7 @@ class QECommonConan(ConanFile):
 
     def build(self):
         cmake = CMake( self)
+        cmake.definitions[ "QE_USE_STD_OPTIONAL"] = self.options.use_std_optional
         cmake.configure()
         cmake.build()
 
