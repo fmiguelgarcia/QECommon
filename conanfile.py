@@ -17,6 +17,10 @@ class QECommonConan(ConanFile):
         self.options.qt_version = os.popen("qmake -query QT_VERSION").read().strip()
         self.output.info("Configure Qt Version: %s" % self.options.qt_version)
 
+    def requirements(self):
+        if self.settings.os == "Windows":
+            self.requires( "Boost/1.64.0@fmiguelgarcia/stable")
+
     def build(self):
         cmake = CMake( self)
         cmake.definitions[ "QE_USE_STD_OPTIONAL"] = self.options.use_std_optional
