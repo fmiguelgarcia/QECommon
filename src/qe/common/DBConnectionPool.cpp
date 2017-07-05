@@ -107,9 +107,7 @@ QString DBConnectionPool::lock( const QString& conn) const
 	if( lockedConn.isEmpty())
 		lockedConn = createLockedConnName( conn);
 
-	qCDebug( lcDBConnectionPool,
-		"Connection '%s' is locked",
-		qUtf8Printable( lockedConn));
+	// qCDebug( lcDBConnectionPool, "Connection '%s' is locked", qUtf8Printable( lockedConn));
 
 	return lockedConn;
 }
@@ -123,9 +121,7 @@ void DBConnectionPool::release(
 	lock_guard<mutex> _(m_freeConnsMtx);
 	m_freeConns[ baseConn].push_back( lockedConn);
 
-	qCDebug( lcDBConnectionPool,
-		"Connection '%s' is released",
-		qUtf8Printable( lockedConn));
+	// qCDebug( lcDBConnectionPool, "Connection '%s' is released", qUtf8Printable( lockedConn));
 }
 
 /// @brief It creates a unique cloned connection of @p conn connection name.
