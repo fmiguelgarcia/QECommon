@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 francisco miguel garcia rodriguez  
+ * Copyright (C) 2017 francisco miguel garcia rodriguez
  * Contact: http://www.dmious.com/qe/licensing/
  *
  * This file is part of the QE Common module of the QE Toolkit.
@@ -16,7 +16,7 @@
  * GNU Lesser General Public License Usage
  * Alternatively, this file may be used under the terms of the GNU Lesser
  * General Public License version 3 as published by the Free
- * Software Foundation and appearing in the file LICENSE.LGPLv3 
+ * Software Foundation and appearing in the file LICENSE.LGPLv3
  * included in the packaging of this file. Please review the
  * following information to ensure the GNU Lesser General Public License
  * requirements will be met: https://www.gnu.org/licenses/lgpl.html and
@@ -25,23 +25,16 @@
  * $QE_END_LICENSE$
  */
 
-#pragma once
-#include <qe/common/Global.hpp>
-#include <memory>
-
-/// @brief Helper for d_pointer
-template <typename T >
-static inline typename std::unique_ptr<T>::pointer qGetPtrHelper( const std::unique_ptr<T>& p)
-{ return p.get(); }
-
-
-class QObject;
+#ifdef QE_USE_STD_OPTIONAL
+# include <optional>
 namespace qe { namespace common {
-
-	struct QECOMMON_EXPORT SharedPtrQObjectDeleter
-	{
-		void operator()( QObject* o) const;
-	};
+	template< class T>
+	using optional = std::optional<T>;
 }}
-
-
+#else
+#include <boost/optional.hpp>
+namespace qe { namespace common {
+	template< class T>
+	using optional = boost::optional<T>;
+}}
+#endif

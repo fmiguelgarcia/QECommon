@@ -9,6 +9,7 @@ set( QECommon_BUILD_VERSION 0)
 
 # Source
 set( QECommon_SRCS 
+	Optional.hpp
 	Common.cpp
 	Exception.cpp 
 	Gadget.cpp
