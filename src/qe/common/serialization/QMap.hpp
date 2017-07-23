@@ -25,23 +25,45 @@
  * $QE_END_LICENSE$
  */
 #pragma once
-#include <QExplicitlySharedDataPointer>
+#include <QMap>
+#include <boost/serialization/split_free.hpp>
+#include <boost/serialization/map.hpp>
+#include <map>
 
 namespace boost
 {
 	namespace serialization
 	{
-		template< class Archive, class T>
-		void serialize(
+	// Class QMap<K,V>
+		// ============================================================
+		template< class Archive, class K, class V>
+		void save(
 				Archive &ar,
-				QExplicitlySharedDataPointer<T>& p,
+				const QMap<K,V>& m,
 				const unsigned int )
 		{
-			T* raw = p.constData();
-			ar & raw;
+			const auto stdMap = m.toStdMap();
+			ar & stdMap;
+		}
 
-			if( Archive::is_loading)
-				p = raw;
+		template< class Archive, class K, class V>
+		void load(
+				Archive &ar,
+				QMap<K,V>& m,
+				const unsigned int )
+		{
+			std::map<K,V> stdMap;
+			ar & stdMap;
+			m = QMap<K,V>( stdMap);
+		}
+
+		template< class Archive, class K, class V>
+		void serialize(
+				Archive &ar,
+				QMap<K,V>& m,
+				const unsigned int version)
+		{
+			split_free( ar, m, version);
 		}
 	}
 }
