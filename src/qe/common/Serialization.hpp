@@ -32,7 +32,10 @@ namespace boost
 	namespace serialization
 	{
 		template< class Archive, class T>
-		void serialization( Archive &ar, QExplicitlySharedDataPointer<T>& p, const unsigned int )
+		void serialize(
+				Archive &ar,
+				QExplicitlySharedDataPointer<T>& p,
+				const unsigned int )
 		{
 			T* raw = p.constData();
 			ar & raw;
