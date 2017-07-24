@@ -32,7 +32,7 @@ namespace boost
 {
 	namespace serialization
 	{
-		template< class Archive, class T>
+		template< class Archive>
 		void save(
 				Archive &ar,
 				const QVariant& v,
@@ -40,7 +40,7 @@ namespace boost
 		{
 		}
 
-		template< class Archive, class T>
+		template< class Archive>
 		void load(
 				Archive &ar,
 				QVariant & v,
@@ -48,7 +48,7 @@ namespace boost
 		{
 		}
 
-		template< class Archive, class T>
+		template< class Archive>
 		void serialize(
 				Archive &ar,
 				QVariant& v,

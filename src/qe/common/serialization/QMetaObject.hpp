@@ -43,7 +43,7 @@ namespace boost
 				const unsigned int )
 		{
 			const std::string moName {
-				(mo) ? (mo->name()) : ("")};
+				(mo) ? (mo->className()) : ("")};
 
 			ar & moName;
 		}
