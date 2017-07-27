@@ -41,7 +41,8 @@ namespace boost
 				const unsigned int )
 		{
 			const QByteArray utf8 = s.toUtf8();
-			ar & std::string( utf8.constData());
+			const std::string utf8Str { utf8.constData() };
+			ar & utf8Str;
 		}
 
 		template< class Archive>
