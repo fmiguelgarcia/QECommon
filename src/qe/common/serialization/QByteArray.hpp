@@ -27,7 +27,8 @@
 #pragma once
 #include <QByteArray>
 #include <boost/serialization/split_free.hpp>
-#include <boost/serialization/string.hpp>
+#include <boost/serialization/binary_object.hpp>
+#include <boost/serialization/array.hpp>
 
 namespace boost
 {
@@ -38,9 +39,12 @@ namespace boost
 				Archive &ar,
 				const QByteArray& a,
 				const unsigned int )
-		{
-			const std::string str ( a.toHex().constData());
-			ar & str;
+		{	
+			const int size = a.size();
+			const char* data = a.constData();
+			
+			ar & BOOST_SERIALIZATION_NVP( size);
+			ar & make_nvp( "data", boost::serialization::make_array( data, size));
 		}
 
 		template< class Archive>
@@ -49,9 +53,20 @@ namespace boost
 				QByteArray& a,
 				const unsigned int )
 		{
-			std::string hexStr;
-			ar & hexStr;
-			a.fromHex( QByteArray::fromStdString( hexStr));
+			const static int sDataSize = 1024;
+			char sData[ sDataSize];
+			char *data = sData;
+			int size;	
+				
+			ar & BOOST_SERIALIZATION_NVP( size);
+			if( size > sDataSize )
+				data = new char[ size];
+
+			ar & make_nvp( "data", boost::serialization::make_array( data, size));
+			a = QByteArray( data, size);
+
+			if( data != sData)
+				delete [] data;			
 		}
 
 		template< class Archive>

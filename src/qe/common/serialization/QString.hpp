@@ -25,9 +25,10 @@
  * $QE_END_LICENSE$
  */
 #pragma once
+#include <qe/common/serialization/QByteArray.hpp>
 #include <QString>
 #include <boost/serialization/split_free.hpp>
-#include <boost/serialization/string.hpp>
+#include <boost/serialization/nvp.hpp>
 #include <string>
 
 namespace boost
@@ -41,8 +42,7 @@ namespace boost
 				const unsigned int )
 		{
 			const QByteArray utf8 = s.toUtf8();
-			const std::string utf8Str { utf8.constData() };
-			ar & utf8Str;
+			ar & BOOST_SERIALIZATION_NVP( utf8);
 		}
 
 		template< class Archive>
@@ -51,9 +51,9 @@ namespace boost
 				QString& s,
 				const unsigned int )
 		{
-			std::string utf8Str;
-			ar & utf8Str;
-			s.fromUtf8( utf8Str.c_str());
+			QByteArray utf8;
+			ar & BOOST_SERIALIZATION_NVP( utf8);
+			s = QString::fromUtf8( utf8);
 		}
 
 		template< class Archive>
