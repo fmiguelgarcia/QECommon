@@ -28,7 +28,6 @@
 #include <QByteArray>
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/binary_object.hpp>
-#include <boost/serialization/array.hpp>
 
 namespace boost
 {
@@ -40,11 +39,14 @@ namespace boost
 				const QByteArray& a,
 				const unsigned int )
 		{	
-			const int size = a.size();
-			const char* data = a.constData();
+			const int size = a.size() * sizeof(char);
+			const char * data = a.constData();
 			
 			ar & BOOST_SERIALIZATION_NVP( size);
-			ar & make_nvp( "data", boost::serialization::make_array( data, size));
+			ar & make_nvp( "data", 
+					boost::serialization::make_binary_object( 
+						const_cast<void*>(static_cast<const void*>( data)), 
+						size * sizeof(char)));
 		}
 
 		template< class Archive>
@@ -62,7 +64,10 @@ namespace boost
 			if( size > sDataSize )
 				data = new char[ size];
 
-			ar & make_nvp( "data", boost::serialization::make_array( data, size));
+			ar & make_nvp( "data", 
+					boost::serialization::make_binary_object( 
+						static_cast<void*>( data), 
+						size * sizeof(char)));
 			a = QByteArray( data, size);
 
 			if( data != sData)

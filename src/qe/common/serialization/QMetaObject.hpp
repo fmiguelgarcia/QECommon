@@ -25,11 +25,10 @@
  * $QE_END_LICENSE$
  */
 #pragma once
+#include <qe/common/serialization/QByteArray.hpp>
 #include <QMetaType>
 #include <QMetaObject>
 #include <boost/serialization/split_free.hpp>
-#include <boost/serialization/string.hpp>
-#include <string>
 
 namespace boost
 {
@@ -42,10 +41,14 @@ namespace boost
 				const QMetaObject*& mo,
 				const unsigned int )
 		{
-			const std::string moName {
-				(mo) ? (mo->className()) : ("")};
+			const QByteArray className;
+			if( mo )
+			{
+				char * rawCn = mo->className();
+				className = QByteArray::fromRawData( rawCn, qstrlen( rawCn));
+			}
 
-			ar & moName;
+			ar & className;
 		}
 
 		template< class Archive, class T>
@@ -54,10 +57,10 @@ namespace boost
 				QMetaObject*& mo,
 				const unsigned int )
 		{
-			std::string moName;
+			QByteArray moName;
 			ar & moName;
 
-			const int typeId = QMetaType::type( moName.c_str());
+			const int typeId = QMetaType::type( moName.constData());
 			mo = QMetaType::metaObjectForType( typeId);
 		}
 
