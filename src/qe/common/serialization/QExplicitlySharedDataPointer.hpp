@@ -27,6 +27,7 @@
 #pragma once
 #include <QExplicitlySharedDataPointer>
 #include <boost/serialization/split_free.hpp>
+#include <boost/serialization/nvp.hpp>
 
 namespace boost
 {
@@ -42,7 +43,7 @@ namespace boost
 				const unsigned int )
 		{
 			const T* raw = p.constData();
-			ar & raw;
+			ar & BOOST_SERIALIZATION_NVP( raw);
 		}
 
 		template< class Archive, class T>
@@ -52,7 +53,7 @@ namespace boost
 				const unsigned int )
 		{
 			T* raw {nullptr};
-			ar & raw;
+			ar & BOOST_SERIALIZATION_NVP( raw);
 			p = raw;
 		}
 
@@ -66,3 +67,4 @@ namespace boost
 		}
 	}
 }
+

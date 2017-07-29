@@ -12,8 +12,7 @@
  * a written agreement between you and The Dmious Company. For licensing terms
  * and conditions see http://www.dmious.com/qe/terms-conditions. For further
  * information use the contact form at http://www.dmious.com/contact-us.
- *
- * GNU Lesser General Public License Usage
+ * * GNU Lesser General Public License Usage
  * Alternatively, this file may be used under the terms of the GNU Lesser
  * General Public License version 3 as published by the Free
  * Software Foundation and appearing in the file LICENSE.LGPLv3
@@ -25,30 +24,28 @@
  * $QE_END_LICENSE$
  */
 #pragma once
-#include <qe/common/serialization/QByteArray.hpp>
+#include <qe/common/serialization/QString.hpp>
 #include <QMetaType>
 #include <QMetaObject>
 #include <boost/serialization/split_free.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/level.hpp>
 
 namespace boost
 {
 	namespace serialization
 	{
-		// ==============================================================
 		template< class Archive>
 		void save(
 				Archive &ar,
 				const QMetaObject*& mo,
 				const unsigned int )
 		{
-			const QByteArray className;
+			const QString className;
 			if( mo )
-			{
-				char * rawCn = mo->className();
-				className = QByteArray::fromRawData( rawCn, qstrlen( rawCn));
-			}
+				className = mo->className();
 
-			ar & className;
+			ar & BOOST_SERIALIZATION_NVP( className);
 		}
 
 		template< class Archive, class T>
@@ -57,10 +54,10 @@ namespace boost
 				QMetaObject*& mo,
 				const unsigned int )
 		{
-			QByteArray moName;
-			ar & moName;
+			QString className;
+			ar & BOOST_SERIALIZATION_NVP( className);
 
-			const int typeId = QMetaType::type( moName.constData());
+			const int typeId = QMetaType::type( className.toLocal8Bit().constData());
 			mo = QMetaType::metaObjectForType( typeId);
 		}
 
@@ -74,3 +71,5 @@ namespace boost
 		}
 	}
 }
+
+BOOST_CLASS_IMPLEMENTATION( QMetaObject, boost::serialization::object_serializable)

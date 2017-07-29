@@ -27,6 +27,7 @@
 #pragma once
 #include <QMap>
 #include <boost/serialization/split_free.hpp>
+#include <boost/serialization/nvp.hpp>
 #include <boost/serialization/map.hpp>
 #include <map>
 
@@ -42,8 +43,8 @@ namespace boost
 				const QMap<K,V>& m,
 				const unsigned int )
 		{
-			const auto stdMap = m.toStdMap();
-			ar & stdMap;
+			const auto map = m.toStdMap();
+			ar & BOOST_SERIALIZATION_NVP( map);
 		}
 
 		template< class Archive, class K, class V>
@@ -52,9 +53,9 @@ namespace boost
 				QMap<K,V>& m,
 				const unsigned int )
 		{
-			std::map<K,V> stdMap;
-			ar & stdMap;
-			m = QMap<K,V>( stdMap);
+			std::map<K,V> map;
+			ar & BOOST_SERIALIZATION_NVP( map);
+			m = QMap<K,V>( map);
 		}
 
 		template< class Archive, class K, class V>
@@ -67,3 +68,4 @@ namespace boost
 		}
 	}
 }
+

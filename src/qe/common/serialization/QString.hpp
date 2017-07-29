@@ -29,6 +29,7 @@
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/level.hpp>
 #include <string>
 
 namespace boost
@@ -72,3 +73,4 @@ namespace boost
 		}
 	}
 }
+BOOST_CLASS_IMPLEMENTATION( QString, boost::serialization::object_serializable)

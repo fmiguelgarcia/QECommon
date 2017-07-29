@@ -28,6 +28,7 @@
 #include <QByteArray>
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/binary_object.hpp>
+#include <boost/serialization/level.hpp>
 
 namespace boost
 {
@@ -84,3 +85,5 @@ namespace boost
 		}
 	}
 }
+
+BOOST_CLASS_IMPLEMENTATION( QByteArray, boost::serialization::object_serializable)

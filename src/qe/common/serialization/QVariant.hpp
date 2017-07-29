@@ -25,9 +25,12 @@
  * $QE_END_LICENSE$
  */
 #pragma once
+#include <qe/common/serialization/QString.hpp>
 #include <QVariant>
 #include <boost/serialization/split_free.hpp>
+#include <boost/serialization/level.hpp>
 
+/// @todo Review QVariant to QDataStream
 namespace boost
 {
 	namespace serialization
@@ -38,6 +41,11 @@ namespace boost
 				const QVariant& v,
 				const unsigned int )
 		{
+			const int type = v.type();
+			const QString value = v.toString();
+
+			ar & BOOST_SERIALIZATION_NVP( type);
+			ar & BOOST_SERIALIZATION_NVP( value);
 		}
 
 		template< class Archive>
@@ -46,6 +54,13 @@ namespace boost
 				QVariant & v,
 				const unsigned int )
 		{
+			int type; 
+			QString value;
+
+			ar & BOOST_SERIALIZATION_NVP( type);
+			ar & BOOST_SERIALIZATION_NVP( value);
+
+			v = value;
 		}
 
 		template< class Archive>
@@ -58,3 +73,5 @@ namespace boost
 		}
 	}
 }
+
+BOOST_CLASS_IMPLEMENTATION( QVariant, boost::serialization::object_serializable)

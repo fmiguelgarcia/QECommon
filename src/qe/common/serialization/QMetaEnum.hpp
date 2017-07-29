@@ -25,9 +25,11 @@
  * $QE_END_LICENSE$
  */
 #pragma once
+#include <qe/common/serialization/QString.hpp>
 #include <QMetaEnum>
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/string.hpp>
+#include <boost/serialization/level.hpp>
 
 namespace boost
 {
@@ -39,6 +41,11 @@ namespace boost
 				const QMetaEnum& a,
 				const unsigned int )
 		{
+			const QString scope = a.scope();
+			const QString name = a.name();
+
+			ar & BOOST_SERIALIZATION_NVP( scope);
+			ar & BOOST_SERIALIZATION_NVP( name);
 		}
 
 		template< class Archive>
@@ -47,6 +54,12 @@ namespace boost
 				QMetaEnum& a,
 				const unsigned int )
 		{
+			QString scope, name; 
+
+			ar & BOOST_SERIALIZATION_NVP( scope);
+			ar & BOOST_SERIALIZATION_NVP( name);
+
+			/// @todo
 		}
 
 		template< class Archive>
@@ -60,3 +73,4 @@ namespace boost
 	}
 }
 
+BOOST_CLASS_IMPLEMENTATION( QMetaEnum, boost::serialization::object_serializable)
