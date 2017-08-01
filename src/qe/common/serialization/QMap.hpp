@@ -29,14 +29,13 @@
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/map.hpp>
+#include <boost/serialization/level.hpp>
 #include <map>
 
 namespace boost
 {
 	namespace serialization
 	{
-	// Class QMap<K,V>
-		// ============================================================
 		template< class Archive, class K, class V>
 		void save(
 				Archive &ar,
@@ -67,5 +66,21 @@ namespace boost
 			split_free( ar, m, version);
 		}
 	}
+
+#if 0
+	// specify the level of serialization implementation for the class
+	// require that class info saved when versioning is used
+	// BOOST_CLASS_IMPLEMENTATION(T, E)
+   template < class K, class V>
+	struct implementation_level_impl< const QMap<K,V> >
+	{
+		typedef mpl::integral_c_tag tag;
+      typedef mpl::int_< boost::serialization::object_serializable > type;
+        BOOST_STATIC_CONSTANT(
+            int,
+            value = implementation_level_impl::type::value
+        );
+	};
+#endif
 }
 

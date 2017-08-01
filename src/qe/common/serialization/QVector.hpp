@@ -28,6 +28,7 @@
 #include <QVector>
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/serialization/level.hpp>
 #include <vector>
 
 namespace boost
@@ -42,8 +43,10 @@ namespace boost
 				const QVector<T>& v,
 				const unsigned int )
 		{
-			const auto stdVector = v.toStdVector();
-			ar & stdVector;
+			const int count = v.size();
+			ar << BOOST_SERIALIZATION_NVP( count);
+			if( !v.empty())
+				ar << make_array( v.constData(), count);
 		}
 
 		template< class Archive, class T>
@@ -52,9 +55,10 @@ namespace boost
 				QVector<T>& v,
 				const unsigned int )
 		{
-			std::vector<T> stdVector;
-			ar & stdVector;
-			v = QVector<T>::fromStdVector( stdVector);
+			int count;
+			ar >> BOOST_SERIALIZATION_NVP( count);
+			v.resize( count);
+			ar >> make_array( v.data(), count);
 		}
 
 		template< class Archive, class T>
@@ -66,4 +70,21 @@ namespace boost
 			split_free( ar, v, version);
 		}
 	}
+
+#if 0
+	// specify the level of serialization implementation for the class
+	// require that class info saved when versioning is used
+	// BOOST_CLASS_IMPLEMENTATION(T, E)
+   template < class T>
+	struct implementation_level_impl< const QVector<T> >
+	{
+		typedef mpl::integral_c_tag tag;
+      typedef mpl::int_< boost::serialization::object_serializable > type;
+        BOOST_STATIC_CONSTANT(
+            int,
+            value = implementation_level_impl::type::value
+        );
+	};
+#endif
 }
+

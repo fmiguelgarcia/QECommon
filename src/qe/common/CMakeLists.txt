@@ -19,6 +19,7 @@ set( QECommon_SRCS
 	DBConnectionLockGuard.cpp
 	DBConnectionPool.cpp
 	CACertificatesRepository.cpp
+	serialization/QString.cpp
 )
 add_definitions( -DBUILD_QECOMMON_LIB)
 
