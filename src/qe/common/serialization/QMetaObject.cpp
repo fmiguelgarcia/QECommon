@@ -62,7 +62,7 @@ void boost::serialization::load(
 	string className;
 	ar & BOOST_SERIALIZATION_NVP( className);
 
-	const int typeId = QMetaType::type( className.c_str())
+	const int typeId = QMetaType::type( className.c_str());
 	mo = const_cast<QMetaObject*>( QMetaType::metaObjectForType( typeId));
 }
 
