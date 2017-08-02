@@ -9,7 +9,7 @@ class QECommonConan(ConanFile):
     url = "https://github.com/fmiguelgarcia/QECommon.git"
     generators = "cmake"
     description = "Common header files and abstract classes for QE"
-    exports_sources = ["src/*", "test/*", "tools/*", "CMakeLists.txt"]
+    exports_sources = ["src/*", "test/*", "tools/*", "CMakeLists.txt", "!.*.swp"]
     options = { "qt_version": "ANY", "use_std_optional": [True ,False]}
     default_options = "use_std_optional=False"
 
