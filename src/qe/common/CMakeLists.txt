@@ -20,6 +20,10 @@ set( QECommon_SRCS
 	DBConnectionPool.cpp
 	CACertificatesRepository.cpp
 	serialization/QString.cpp
+	serialization/QVariant.cpp
+	serialization/QByteArray.cpp
+	serialization/QMetaEnum.cpp
+	serialization/QMetaObject.cpp
 )
 add_definitions( -DBUILD_QECOMMON_LIB)
 

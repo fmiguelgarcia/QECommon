@@ -24,36 +24,51 @@
  *
  * $QE_END_LICENSE$
  */
-#pragma once
-#include <QMetaEnum>
-#include <boost/serialization/split_free.hpp>
-#include <boost/serialization/level.hpp>
+#include "QMetaEnum.hpp"
+#include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/string.hpp>
 
-namespace boost
+using namespace boost;
+using namespace std;
+
+	template< class Archive >
+void boost::serialization::save(
+		Archive &ar,
+		const QMetaEnum& a,
+		const unsigned int )
 {
-	namespace serialization
-	{
-		template< class Archive >
-		void save(
-				Archive &ar,
-				const QMetaEnum& a,
-				const unsigned int );
+	const string scope = a.scope();
+	const string name = a.name();
 
-		template< class Archive>
-		void load(
-				Archive &ar,
-				QMetaEnum& a,
-				const unsigned int );
+	ar & BOOST_SERIALIZATION_NVP( scope);
+	ar & BOOST_SERIALIZATION_NVP( name);
+}
+	
+	template
+void boost::serialization::save<archive::polymorphic_oarchive>(
+		archive::polymorphic_oarchive &ar,
+		const QMetaEnum& a,
+		const unsigned int );
 
-		template< class Archive>
-		void serialize(
-				Archive &ar,
-				QMetaEnum& p,
-				const unsigned int version)
-		{
-			split_free( ar, p, version);
-		}
-	}
+	template< class Archive>
+void boost::serialization::load(
+		Archive &ar,
+		QMetaEnum& a,
+		const unsigned int )
+{
+	string scope, name; 
+
+	ar & BOOST_SERIALIZATION_NVP( scope);
+	ar & BOOST_SERIALIZATION_NVP( name);
+
+	/// @todo
 }
 
-BOOST_CLASS_IMPLEMENTATION( QMetaEnum, boost::serialization::object_serializable)
+	template
+void boost::serialization::load<archive::polymorphic_iarchive>(
+		archive::polymorphic_iarchive &ar,
+		QMetaEnum& a,
+		const unsigned int );
+

@@ -23,36 +23,51 @@
  *
  * $QE_END_LICENSE$
  */
-#pragma once
-#include <QMetaObject>
-#include <boost/serialization/split_free.hpp>
-#include <boost/serialization/level.hpp>
+#include "QMetaObject.hpp"
+#include <qe/common/serialization/QString.hpp>
+#include <QMetaType>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
 
-namespace boost
+using namespace boost;
+using namespace std;
+
+	template< class Archive>
+void boost::serialization::save(
+		Archive &ar,
+		const QMetaObject*& mo,
+		const unsigned int )
 {
-	namespace serialization
-	{
-		template< class Archive>
-		void save(
-				Archive &ar,
-				const QMetaObject*& mo,
-				const unsigned int );
+	string className;
+	if( mo )
+		className = mo->className();
 
-		template< class Archive>
-		void load(
-				Archive &ar,
-				QMetaObject*& mo,
-				const unsigned int );
-
-		template< class Archive, class T>
-		void serialize(
-				Archive &ar,
-				QMetaObject& mo,
-				const unsigned int version)
-		{
-			split_free( ar, mo, version);
-		}
-	}
+	ar & BOOST_SERIALIZATION_NVP( className);
 }
 
-BOOST_CLASS_IMPLEMENTATION( QMetaObject, boost::serialization::object_serializable)
+template
+void boost::serialization::save<archive::polymorphic_oarchive>(
+		archive::polymorphic_oarchive &ar,
+		const QMetaObject*& mo,
+		const unsigned int );
+
+	template< class Archive>
+void boost::serialization::load(
+		Archive &ar,
+		QMetaObject*& mo,
+		const unsigned int )
+{
+	string className;
+	ar & BOOST_SERIALIZATION_NVP( className);
+
+	const int typeId = QMetaType::type( className.c_str())
+	mo = const_cast<QMetaObject*>( QMetaType::metaObjectForType( typeId));
+}
+
+template
+void boost::serialization::load<archive::polymorphic_iarchive>(
+		archive::polymorphic_iarchive &ar,
+		QMetaObject*& mo,
+		const unsigned int );

@@ -27,10 +27,7 @@
 #pragma once
 #include <QString>
 #include <boost/serialization/split_free.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/nvp.hpp>
 #include <boost/serialization/level.hpp>
-#include <string>
 
 namespace boost
 {
@@ -40,28 +37,13 @@ namespace boost
 		void save(
 				Archive &ar,
 				const QString& s,
-				const unsigned int )
-		{
-			const std::string stds = s.toStdString();
-			ar & stds;
-			// const QByteArray utf8 = s.toUtf8();
-			// ar & BOOST_SERIALIZATION_NVP( utf8);
-		}
+				const unsigned int );
 
 		template< class Archive>
 		void load(
 				Archive &ar,
 				QString& s,
-				const unsigned int )
-		{
-			std::string stds;
-			ar & stds;
-			s = QString::fromStdString( stds);
-
-			// QByteArray utf8;
-			// ar & BOOST_SERIALIZATION_NVP( utf8);
-			// s = QString::fromUtf8( utf8);
-		}
+				const unsigned int );
 
 		template< class Archive>
 		void serialize(

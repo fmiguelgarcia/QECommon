@@ -24,36 +24,52 @@
  *
  * $QE_END_LICENSE$
  */
-#pragma once
-#include <QMetaEnum>
-#include <boost/serialization/split_free.hpp>
-#include <boost/serialization/level.hpp>
+#include "QVariant.hpp"
+#include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/polymorphic_oarchive.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/nvp.hpp>
 
-namespace boost
+using namespace boost;
+
+template< class Archive>
+void boost::serialization::save(
+		Archive &ar,
+		const QVariant& v,
+		const unsigned int )
 {
-	namespace serialization
-	{
-		template< class Archive >
-		void save(
-				Archive &ar,
-				const QMetaEnum& a,
-				const unsigned int );
+	const int type = v.type();
+	const QString value = v.toString();
 
-		template< class Archive>
-		void load(
-				Archive &ar,
-				QMetaEnum& a,
-				const unsigned int );
-
-		template< class Archive>
-		void serialize(
-				Archive &ar,
-				QMetaEnum& p,
-				const unsigned int version)
-		{
-			split_free( ar, p, version);
-		}
-	}
+	ar & BOOST_SERIALIZATION_NVP( type);
+	ar & BOOST_SERIALIZATION_NVP( value);
 }
 
-BOOST_CLASS_IMPLEMENTATION( QMetaEnum, boost::serialization::object_serializable)
+template
+void boost::serialization::save<archive::polymorphic_oarchive>(
+		archive::polymorphic_oarchive &ar,
+		const QVariant& v,
+		const unsigned int );
+
+template< class Archive>
+void boost::serialization::load(
+		Archive &ar,
+		QVariant & v,
+		const unsigned int )
+{
+	int type; 
+	QString value;
+
+	ar & BOOST_SERIALIZATION_NVP( type);
+	ar & BOOST_SERIALIZATION_NVP( value);
+
+	v = value;
+}
+
+template
+void boost::serialization::load<archive::polymorphic_iarchive>(
+		archive::polymorphic_iarchive &ar,
+		QVariant & v,
+		const unsigned int );
+
+

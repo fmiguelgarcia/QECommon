@@ -39,29 +39,13 @@ namespace boost
 		void save(
 				Archive &ar,
 				const QVariant& v,
-				const unsigned int )
-		{
-			const int type = v.type();
-			const QString value = v.toString();
-
-			ar & BOOST_SERIALIZATION_NVP( type);
-			ar & BOOST_SERIALIZATION_NVP( value);
-		}
+				const unsigned int );
 
 		template< class Archive>
 		void load(
 				Archive &ar,
 				QVariant & v,
-				const unsigned int )
-		{
-			int type; 
-			QString value;
-
-			ar & BOOST_SERIALIZATION_NVP( type);
-			ar & BOOST_SERIALIZATION_NVP( value);
-
-			v = value;
-		}
+				const unsigned int );
 
 		template< class Archive>
 		void serialize(
